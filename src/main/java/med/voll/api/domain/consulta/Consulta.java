@@ -10,13 +10,12 @@ import med.voll.api.domain.paciente.Paciente;
 
 import java.time.LocalDateTime;
 
-@Table(name="consultas")
+@Table(name = "consultas")
 @Entity(name = "Consulta")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-
 public class Consulta {
 
     @Id
@@ -31,6 +30,7 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
-    private LocalDateTime data;
+    private LocalDateTime fecha;
+
 
 }

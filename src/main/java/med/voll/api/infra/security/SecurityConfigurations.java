@@ -23,14 +23,15 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    return httpSecurity.csrf().disable()
-            .sessionManagement()
-            .and().authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/login").permitAll()
-            .anyRequest().authenticated()
-            .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
-
+        return httpSecurity.csrf().disable().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Le indicamos a Spring el tipo de sesion
+                .and().authorizeRequests()
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
@@ -38,8 +39,10 @@ public class SecurityConfigurations {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
